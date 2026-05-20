@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wybierz wersję strony</title>
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #0b0b0b;
+      color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .wrapper {
+      width: 90%;
+      max-width: 900px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 12px;
+    }
+
+    p {
+      color: #bdbdbd;
+      margin-bottom: 35px;
+    }
+
+    .versions {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 25px;
+    }
+
+    .box {
+      text-decoration: none;
+      color: #f5f5f5;
+      background: #151515;
+      border: 1px solid #2a2a2a;
+      border-radius: 22px;
+      padding: 50px 25px;
+      transition: 0.3s;
+    }
+
+    .box:hover {
+      transform: translateY(-6px);
+      border-color: #c9a45c;
+      box-shadow: 0 15px 40px rgba(201, 164, 92, 0.18);
+    }
+
+    .box h2 {
+      margin: 0 0 10px;
+      font-size: 30px;
+      color: #c9a45c;
+    }
+
+    .box span {
+      color: #aaa;
+      font-size: 15px;
+    }
+
+    @media (max-width: 700px) {
+      .versions {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="wrapper">
+    <h1>Wybierz wersję strony</h1>
+    <p>Demo strony dla Barbershop Rococo Barber Fryzjer Męski</p>
+
+    <div class="versions">
+      <a href="wersja1.html" class="box">
+        <h2>Wersja 1</h2>
+        <span>Kliknij, aby zobaczyć pierwszą wersję strony</span>
+      </a>
+
+      <a href="wersja2.html" class="box">
+        <h2>Wersja 2</h2>
+        <span>Kliknij, aby zobaczyć drugą wersję strony</span>
+      </a>
+    </div>
+  </main>
+</body>
+</html>
