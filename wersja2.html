@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GM Autoservice – Olsztyn</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --ink:    #111820;
+  --ink2:   #3a4a58;
+  --soft:   #6b7f90;
+  --line:   #e2e8ed;
+  --bg:     #f7f9fb;
+  --white:  #ffffff;
+  --red:    #c0392b;
+  --red2:   #a02d22;
+  --green:  #217a4b;
+  --gold:   #d4950a;
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--ink); font-size: 16px; line-height: 1.6; }
+
+/* ── TOP BAR ── */
+.topbar {
+  background: var(--ink);
+  color: #fff;
+  text-align: center;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: .01em;
+}
+.topbar a { color: #f4b860; text-decoration: none; font-weight: 700; }
+
+/* ── NAV ── */
+nav {
+  background: var(--white);
+  border-bottom: 1px solid var(--line);
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 99;
+}
+.logo { font-size: 18px; font-weight: 800; color: var(--ink); letter-spacing: -.02em; }
+.logo span { color: var(--red); }
+nav ul { list-style: none; display: flex; }
+nav a { display: block; padding: 18px 16px; font-size: 14px; font-weight: 500; color: var(--ink2); text-decoration: none; transition: color .15s; }
+nav a:hover { color: var(--red); }
+.nav-phone {
+  background: var(--red); color: #fff !important;
+  padding: 10px 22px !important;
+  border-radius: 8px; font-weight: 700 !important;
+  font-size: 14px !important;
+  transition: background .15s !important;
+}
+.nav-phone:hover { background: var(--red2) !important; }
+
+/* ── HERO ── */
+.hero {
+  background: var(--ink);
+  color: #fff;
+  padding: 80px 40px 72px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 900px 500px at 80% 20%, rgba(192,57,43,0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 600px 400px at 10% 80%, rgba(192,57,43,0.10) 0%, transparent 55%);
+}
+.hero > * { position: relative; }
+.hero-eyebrow {
+  font-size: 12px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(255,255,255,.5); margin-bottom: 18px;
+}
+.hero h1 { font-size: 52px; font-weight: 800; line-height: 1.1; letter-spacing: -.03em; margin-bottom: 16px; }
+.hero h1 em { font-style: normal; color: #f4b860; }
+.hero-desc { font-size: 17px; color: rgba(255,255,255,.65); max-width: 480px; margin-bottom: 40px; }
+.hero-btns { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+.btn-red {
+  background: var(--red); color: #fff; font-weight: 700; font-size: 15px;
+  padding: 14px 32px; border-radius: 10px; text-decoration: none;
+  transition: background .15s, transform .15s;
+  box-shadow: 0 8px 24px rgba(192,57,43,.35);
+}
+.btn-red:hover { background: var(--red2); transform: translateY(-2px); }
+.btn-outline {
+  background: transparent; color: #fff; font-weight: 600; font-size: 15px;
+  padding: 14px 30px; border-radius: 10px; text-decoration: none;
+  border: 1.5px solid rgba(255,255,255,.3);
+  transition: border-color .15s, background .15s;
+}
+.btn-outline:hover { border-color: rgba(255,255,255,.7); background: rgba(255,255,255,.06); }
+
+.hero-stats {
+  margin-top: 60px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(255,255,255,.1);
+  display: flex;
+  gap: 64px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.stat strong { display: block; font-size: 36px; font-weight: 800; letter-spacing: -.03em; }
+.stat span { font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: .1em; color: rgba(255,255,255,.45); }
+
+/* ── PILLARS ── */
+.pillars {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid var(--line);
+  background: var(--white);
+}
+.pillar {
+  padding: 32px 28px;
+  border-right: 1px solid var(--line);
+}
+.pillar:last-child { border-right: none; }
+.pillar-icon { font-size: 28px; margin-bottom: 12px; }
+.pillar h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; color: var(--ink); }
+.pillar p { font-size: 13.5px; color: var(--soft); line-height: 1.55; }
+
+/* ── MAIN CONTENT ── */
+.wrap { max-width: 1060px; margin: 0 auto; padding: 56px 32px; }
+.content-grid { display: grid; grid-template-columns: 1fr 340px; gap: 40px; align-items: start; }
+
+/* ── SECTION HEADING ── */
+.sh {
+  font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--red); margin-bottom: 20px;
+}
+.section-block { margin-bottom: 48px; }
+
+/* ── SERVICES ── */
+.svc { list-style: none; }
+.svc li {
+  display: flex; align-items: center; gap: 14px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 15px; font-weight: 500; color: var(--ink);
+}
+.svc li:last-child { border-bottom: none; }
+.svc-check {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: #e8f5ee; color: var(--green);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 800; flex-shrink: 0;
+}
+
+/* ── CALLOUT ── */
+.callout {
+  background: #fff8f0;
+  border: 1px solid #f5d9b8;
+  border-left: 4px solid #e8960a;
+  border-radius: 0 10px 10px 0;
+  padding: 18px 22px;
+  margin-top: 8px;
+}
+.callout strong { display: block; font-size: 14.5px; font-weight: 700; color: var(--ink); margin-bottom: 5px; }
+.callout p { font-size: 13.5px; color: var(--ink2); }
+
+/* ── REVIEWS ── */
+.review { padding: 20px 0; border-bottom: 1px solid var(--line); }
+.review:last-child { border-bottom: none; }
+.rev-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.rev-avatar {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: #f0e8e8; color: var(--red);
+  font-weight: 800; font-size: 16px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.rev-name { font-weight: 700; font-size: 14.5px; }
+.rev-meta { font-size: 12px; color: var(--soft); margin-top: 2px; }
+.rev-stars { color: var(--gold); font-size: 13px; }
+.rev-text { font-size: 14px; color: var(--ink2); line-height: 1.75; }
+
+/* ── SIDEBAR ── */
+.sidebar-block { margin-bottom: 36px; }
+
+/* RATING BOX */
+.rating-wrap {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.rating-inner { padding: 28px 24px 20px; text-align: center; }
+.r-big { font-size: 60px; font-weight: 800; color: var(--ink); line-height: 1; letter-spacing: -.04em; }
+.r-stars { color: var(--gold); font-size: 24px; letter-spacing: 3px; margin: 8px 0 5px; }
+.r-label { font-size: 13px; color: var(--soft); }
+.r-bars { padding: 16px 24px 20px; border-top: 1px solid var(--line); }
+.bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 13px; font-weight: 600; color: var(--ink2); }
+.bar-row:last-child { margin-bottom: 0; }
+.bar-bg { flex: 1; height: 7px; background: var(--line); border-radius: 99px; overflow: hidden; }
+.bar-fg { height: 100%; background: var(--gold); border-radius: 99px; }
+
+/* HOURS BOX */
+.info-wrap {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.info-head {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--line);
+  font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--red);
+}
+.info-body { padding: 6px 20px 16px; }
+
+.hours-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px solid #f0f3f6; font-size: 14.5px; }
+.hours-row:last-child { border-bottom: none; }
+.hours-day { color: var(--ink2); font-weight: 500; }
+.hours-time { font-weight: 700; color: var(--green); }
+.hours-off { font-weight: 400; color: #bcc8d4; }
+.today-pill {
+  display: inline-flex; align-items: center;
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+  background: var(--green); color: #fff;
+  padding: 2px 8px; border-radius: 99px; margin-left: 8px;
+}
+
+/* CONTACT BOX */
+.contact-row { display: flex; gap: 14px; padding: 12px 0; border-bottom: 1px solid #f0f3f6; align-items: flex-start; }
+.contact-row:last-child { border-bottom: none; }
+.c-icon { font-size: 18px; flex-shrink: 0; }
+.c-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--soft); margin-bottom: 3px; }
+.c-val { font-size: 14.5px; font-weight: 600; color: var(--ink); }
+.c-val a { color: var(--red); text-decoration: none; }
+.c-val a:hover { text-decoration: underline; }
+
+/* ── CTA ── */
+.cta {
+  background: var(--ink);
+  color: #fff;
+  text-align: center;
+  padding: 64px 32px;
+  position: relative;
+  overflow: hidden;
+}
+.cta::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 700px 400px at 50% 120%, rgba(192,57,43,0.3) 0%, transparent 60%);
+}
+.cta > * { position: relative; }
+.cta h2 { font-size: 32px; font-weight: 800; letter-spacing: -.02em; margin-bottom: 10px; }
+.cta p { font-size: 16px; color: rgba(255,255,255,.6); margin-bottom: 32px; }
+.cta-note { font-size: 13px; color: rgba(255,255,255,.35); margin-top: 18px; }
+
+/* ── FOOTER ── */
+footer { background: #0d1419; color: #4e6070; text-align: center; padding: 28px 24px; font-size: 13.5px; line-height: 1.8; }
+footer strong { color: #7a96a8; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 800px) {
+  nav { padding: 0 20px; }
+  nav ul { display: none; }
+  .hero { padding: 56px 24px 52px; }
+  .hero h1 { font-size: 36px; }
+  .hero-stats { gap: 32px; }
+  .pillars { grid-template-columns: 1fr 1fr; }
+  .pillar:nth-child(2) { border-right: none; }
+  .pillar:nth-child(3) { border-right: none; }
+  .pillar:nth-child(1), .pillar:nth-child(2) { border-bottom: 1px solid var(--line); }
+  .wrap { padding: 40px 20px; }
+  .content-grid { grid-template-columns: 1fr; }
+  .cta h2 { font-size: 26px; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  Czynne Pn–Pt, 9:00–17:00 &nbsp;·&nbsp; <a href="tel:539688069">539 688 069</a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">GM <span>Auto</span>service</div>
+  <ul>
+    <li><a href="#uslugi">Usługi</a></li>
+    <li><a href="#o-nas">O nas</a></li>
+    <li><a href="#godziny">Godziny</a></li>
+    <li><a href="#opinie">Opinie</a></li>
+    <li><a href="#kontakt">Kontakt</a></li>
+    <li><a href="tel:539688069" class="nav-phone">📞 Zadzwoń</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <p class="hero-eyebrow">Serwis samochodowy · Olsztyn</p>
+  <h1>Warsztat, któremu<br>możesz <em>zaufać</em></h1>
+  <p class="hero-desc">Maciej Grabowski · ul. Jacka Kuronia 13 · Uczciwa wycena, rzetelna naprawa, bez zbędnych kosztów.</p>
+  <div class="hero-btns">
+    <a href="tel:539688069" class="btn-red">📞 Umów wizytę</a>
+    <a href="#uslugi" class="btn-outline">Zobacz usługi</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><strong>4.8★</strong><span>Ocena Google</span></div>
+    <div class="stat"><strong>79+</strong><span>Opinii klientów</span></div>
+    <div class="stat"><strong>Pn–Pt</strong><span>9:00 – 17:00</span></div>
+  </div>
+</div>
+
+<!-- PILLARS -->
+<div class="pillars" id="o-nas">
+  <div class="pillar">
+    <div class="pillar-icon">🤝</div>
+    <h3>Uczciwe podejście</h3>
+    <p>Płacisz tylko za to, co faktycznie wymaga naprawy — nie więcej, nie mniej.</p>
+  </div>
+  <div class="pillar">
+    <div class="pillar-icon">🔍</div>
+    <h3>Diagnostyka OBD</h3>
+    <p>Pełna diagnostyka komputerowa zanim cokolwiek zaczniemy naprawiać.</p>
+  </div>
+  <div class="pillar">
+    <div class="pillar-icon">💬</div>
+    <h3>Jasna komunikacja</h3>
+    <p>Wyjaśniamy co i dlaczego. Żadnych niespodzianek na koniec wizyty.</p>
+  </div>
+  <div class="pillar">
+    <div class="pillar-icon">📋</div>
+    <h3>Ocena przed zakupem</h3>
+    <p>Kupujesz używane auto? Sprawdzimy je rzetelnie przed podpisaniem umowy.</p>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="wrap">
+  <div class="content-grid">
+
+    <!-- LEFT -->
+    <div>
+
+      <!-- USŁUGI -->
+      <div class="section-block" id="uslugi">
+        <p class="sh">Zakres usług</p>
+        <ul class="svc">
+          <li><span class="svc-check">✓</span> Wymiana oleju i filtrów</li>
+          <li><span class="svc-check">✓</span> Naprawa i wymiana układu hamulcowego (klocki, tarcze, szczęki)</li>
+          <li><span class="svc-check">✓</span> Naprawa zawieszenia (amortyzatory, łożyska, drążki, sworznie)</li>
+          <li><span class="svc-check">✓</span> Sezonowa wymiana i wyważanie opon</li>
+          <li><span class="svc-check">✓</span> Naprawa instalacji elektrycznej</li>
+          <li><span class="svc-check">✓</span> Wymiana akumulatorów, alternatorów, rozruszników</li>
+          <li><span class="svc-check">✓</span> Diagnostyka komputerowa (OBD)</li>
+          <li><span class="svc-check">✓</span> Ocena stanu technicznego przed zakupem pojazdu</li>
+        </ul>
+        <div class="callout">
+          <strong>Nie wiesz co dolega Twojemu autu?</strong>
+          <p>Zadzwoń lub przyjedź — wstępna ocena jest bezpłatna. Powiemy co wymaga uwagi, a co możesz spokojnie odłożyć na później.</p>
+        </div>
+      </div>
+
+      <!-- OPINIE -->
+      <div class="section-block" id="opinie">
+        <p class="sh">Opinie klientów</p>
+        <div class="review">
+          <div class="rev-head">
+            <div class="rev-avatar">M</div>
+            <div>
+              <div class="rev-name">Mateusz _</div>
+              <div class="rev-meta">Lokalny Przewodnik · 5 miesięcy temu &nbsp;<span class="rev-stars">★★★★★</span></div>
+            </div>
+          </div>
+          <p class="rev-text">Uczciwość. Tak podsumię ostatnią wizytę. Poprosiłem o zmianę oleju, wymianę klocków i opon. Do zapłaty jedynie wymiana opon — właściciel uczciwie stwierdził, że hamulce i olej są w dobrej kondycji. Pierwszy raz spotykam się z taką sytuacją. Serdecznie polecam.</p>
+        </div>
+        <div class="review">
+          <div class="rev-head">
+            <div class="rev-avatar">K</div>
+            <div>
+              <div class="rev-name">Klient serwisu</div>
+              <div class="rev-meta">Opinia zweryfikowana &nbsp;<span class="rev-stars">★★★★★</span></div>
+            </div>
+          </div>
+          <p class="rev-text">Solidna robota i uczciwe ceny. Mechanik zawsze wyjaśnia co i dlaczego — bez niepotrzebnych napraw. Polecam każdemu, kto szuka rzetelnego warsztatu w Olsztynie.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SIDEBAR -->
+    <div>
+
+      <!-- OCENA -->
+      <div class="rating-wrap">
+        <div class="rating-inner">
+          <div class="r-big">4.8</div>
+          <div class="r-stars">★★★★★</div>
+          <div class="r-label">na podstawie 79 opinii Google</div>
+        </div>
+        <div class="r-bars">
+          <div class="bar-row"><span>5★</span><div class="bar-bg"><div class="bar-fg" style="width:88%"></div></div><span>88%</span></div>
+          <div class="bar-row"><span>4★</span><div class="bar-bg"><div class="bar-fg" style="width:8%"></div></div><span>8%</span></div>
+          <div class="bar-row"><span>3★</span><div class="bar-bg"><div class="bar-fg" style="width:4%"></div></div><span>4%</span></div>
+        </div>
+      </div>
+
+      <!-- GODZINY -->
+      <div class="info-wrap" id="godziny">
+        <div class="info-head">Godziny otwarcia</div>
+        <div class="info-body">
+          <div class="hours-row">
+            <span class="hours-day">Środa <span class="today-pill">dziś</span></span>
+            <span class="hours-time">9:00 – 17:00</span>
+          </div>
+          <div class="hours-row"><span class="hours-day">Poniedziałek</span><span class="hours-time">9:00 – 17:00</span></div>
+          <div class="hours-row"><span class="hours-day">Wtorek</span><span class="hours-time">9:00 – 17:00</span></div>
+          <div class="hours-row"><span class="hours-day">Czwartek</span><span class="hours-time">9:00 – 17:00</span></div>
+          <div class="hours-row"><span class="hours-day">Piątek</span><span class="hours-time">9:00 – 17:00</span></div>
+          <div class="hours-row"><span class="hours-day">Sobota</span><span class="hours-off">Nieczynne</span></div>
+          <div class="hours-row"><span class="hours-day">Niedziela</span><span class="hours-off">Nieczynne</span></div>
+        </div>
+      </div>
+
+      <!-- KONTAKT -->
+      <div class="info-wrap" id="kontakt">
+        <div class="info-head">Kontakt i adres</div>
+        <div class="info-body">
+          <div class="contact-row">
+            <span class="c-icon">📞</span>
+            <div>
+              <div class="c-label">Telefon</div>
+              <div class="c-val"><a href="tel:539688069">539 688 069</a></div>
+            </div>
+          </div>
+          <div class="contact-row">
+            <span class="c-icon">📍</span>
+            <div>
+              <div class="c-label">Adres</div>
+              <div class="c-val">ul. Jacka Kuronia 13<br>10-166 Olsztyn</div>
+            </div>
+          </div>
+          <div class="contact-row">
+            <span class="c-icon">🗺️</span>
+            <div>
+              <div class="c-label">Nawigacja</div>
+              <div class="c-val"><a href="https://maps.google.com/?q=Jacka+Kuronia+13+Olsztyn" target="_blank">Otwórz w Google Maps →</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta">
+  <h2>Potrzebujesz naprawy lub przeglądu?</h2>
+  <p>Czynne od poniedziałku do piątku, godz. 9:00–17:00</p>
+  <a href="tel:539688069" class="btn-red" style="font-size:17px; padding:16px 40px;">📞 539 688 069</a>
+  <p class="cta-note">Bezpłatna wstępna ocena stanu pojazdu</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <strong>GM Autoservice – Maciej Grabowski</strong><br>
+  ul. Jacka Kuronia 13, 10-166 Olsztyn &nbsp;·&nbsp; tel. 539 688 069
+</footer>
+
+</body>
+</html>

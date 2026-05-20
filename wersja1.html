@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GM AUTOSERVICE – Maciej Grabowski | Olsztyn</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --dark: #111111;
+    --panel: #161616;
+    --border: #2a2a2a;
+    --red: #c0392b;
+    --red-hot: #e74c3c;
+    --white: #f0ece4;
+    --muted: #888;
+    --accent: #ff4422;
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: .4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 48px;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.12em;
+    color: var(--white);
+  }
+  .logo span { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: .82rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+
+  .nav-cta {
+    background: var(--accent);
+    color: var(--black) !important;
+    font-weight: 500 !important;
+    padding: 10px 22px;
+    color: #000 !important;
+    letter-spacing: .08em;
+  }
+  .nav-cta:hover { background: #ff6644; color: #000 !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 48px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 40%, rgba(192,57,43,0.12) 0%, transparent 60%),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 79px,
+        rgba(255,255,255,0.015) 80px
+      ),
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 79px,
+        rgba(255,255,255,0.015) 80px
+      );
+  }
+
+  .hero-tag {
+    font-size: .75rem;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: fadeUp .8s ease both;
+  }
+  .hero-tag::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(5rem, 14vw, 14rem);
+    line-height: .9;
+    letter-spacing: -.01em;
+    color: var(--white);
+    animation: fadeUp .8s .1s ease both;
+  }
+  h1 em {
+    font-style: normal;
+    color: var(--accent);
+    -webkit-text-stroke: 2px var(--accent);
+    color: transparent;
+  }
+
+  .hero-sub {
+    margin-top: 32px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    animation: fadeUp .8s .2s ease both;
+  }
+
+  .hero-desc {
+    max-width: 420px;
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--muted);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 40px;
+  }
+
+  .stat {
+    text-align: right;
+  }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem;
+    line-height: 1;
+    color: var(--white);
+  }
+  .stat-label {
+    font-size: .72rem;
+    color: var(--muted);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+
+  .scroll-line {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted);
+    font-size: .68rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    animation: pulse 2s infinite;
+  }
+  .scroll-line::after {
+    content: '';
+    width: 1px;
+    height: 48px;
+    background: linear-gradient(var(--muted), transparent);
+  }
+
+  /* SECTION BASE */
+  section { padding: 120px 48px; }
+
+  .section-label {
+    font-size: .72rem;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::before {
+    content: '';
+    width: 30px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 6vw, 6rem);
+    line-height: .95;
+    letter-spacing: .01em;
+    margin-bottom: 60px;
+  }
+
+  /* SERVICES */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .service-card {
+    background: var(--panel);
+    padding: 44px 36px;
+    position: relative;
+    overflow: hidden;
+    transition: background .3s;
+    cursor: default;
+  }
+  .service-card:hover { background: #1c1c1c; }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .4s ease;
+  }
+  .service-card:hover::before { transform: scaleX(1); }
+
+  .service-icon {
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .service-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: .06em;
+    margin-bottom: 12px;
+  }
+
+  .service-desc {
+    font-size: .85rem;
+    line-height: 1.65;
+    color: var(--muted);
+  }
+
+  /* INFO */
+  .info-section {
+    background: var(--panel);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+  }
+
+  .info-block {
+    padding: 60px 48px;
+    border-right: 1px solid var(--border);
+  }
+  .info-block:last-child { border-right: none; }
+
+  .info-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: .1em;
+    margin-bottom: 28px;
+    color: var(--white);
+  }
+
+  .info-body {
+    font-size: .88rem;
+    line-height: 2;
+    color: var(--muted);
+  }
+
+  .info-body strong {
+    color: var(--white);
+    font-weight: 500;
+  }
+
+  .hours-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: .85rem;
+  }
+  .hours-row:last-child { border-bottom: none; }
+  .hours-open { color: #5cb85c; }
+  .hours-closed { color: var(--muted); }
+
+  .phone-big {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.4rem;
+    letter-spacing: .05em;
+    color: var(--white);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 8px;
+    transition: color .2s;
+  }
+  .phone-big:hover { color: var(--accent); }
+
+  /* REVIEWS */
+  .reviews-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 60px;
+  }
+
+  .rating-big {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+  }
+  .rating-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 7rem;
+    line-height: 1;
+    color: var(--white);
+  }
+  .rating-info { padding-bottom: 12px; }
+  .stars { color: var(--accent); font-size: 1.4rem; letter-spacing: 3px; }
+  .rating-count { color: var(--muted); font-size: .85rem; margin-top: 4px; }
+
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .review-card {
+    background: var(--panel);
+    padding: 40px;
+  }
+
+  .review-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .reviewer-name {
+    font-weight: 500;
+    font-size: .9rem;
+    color: var(--white);
+  }
+  .reviewer-sub {
+    font-size: .75rem;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .review-stars { color: var(--accent); font-size: .9rem; letter-spacing: 2px; }
+
+  .review-text {
+    font-size: .87rem;
+    line-height: 1.75;
+    color: #aaa;
+    font-style: italic;
+  }
+  .review-text::before { content: '"'; font-size: 1.5rem; color: var(--accent); line-height: 0; vertical-align: -.25em; margin-right: 4px; }
+
+  /* MAP CTA */
+  .cta-section {
+    text-align: center;
+    padding: 120px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-section::before {
+    content: 'GM';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 40vw;
+    color: rgba(255,255,255,0.02);
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  .cta-section p {
+    font-size: 1rem;
+    color: var(--muted);
+    margin-bottom: 48px;
+  }
+
+  .btn-group {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 36px;
+    font-size: .82rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all .25s;
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #000;
+  }
+  .btn-primary:hover {
+    background: #ff6644;
+    transform: translateY(-2px);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--white);
+    border: 1px solid var(--border);
+  }
+  .btn-outline:hover {
+    border-color: var(--white);
+    transform: translateY(-2px);
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: .12em;
+  }
+  .footer-logo span { color: var(--accent); }
+
+  footer p {
+    font-size: .75rem;
+    color: var(--muted);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse {
+    0%,100% { opacity: .5; }
+    50% { opacity: 1; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 18px 24px; }
+    .nav-links { display: none; }
+    .hero { padding: 0 24px 60px; }
+    section { padding: 80px 24px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .info-grid { grid-template-columns: 1fr; }
+    .info-block { border-right: none; border-bottom: 1px solid var(--border); padding: 40px 24px; }
+    .reviews-grid { grid-template-columns: 1fr; }
+    .hero-sub { flex-direction: column; gap: 32px; align-items: flex-start; }
+    .hero-stats { gap: 24px; }
+    .stat { text-align: left; }
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">GM<span>.</span>AUTO</div>
+  <ul class="nav-links">
+    <li><a href="#uslugi">Usługi</a></li>
+    <li><a href="#kontakt">Kontakt</a></li>
+    <li><a href="#opinie">Opinie</a></li>
+    <li><a href="tel:539688069" class="nav-cta">Zadzwoń</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-tag">Warsztat samochodowy · Olsztyn</div>
+  <h1>GM<br><em>AUTO</em><br>SERVICE</h1>
+  <div class="hero-sub">
+    <p class="hero-desc">
+      Profesjonalny serwis samochodowy w Olsztynie. Maciej Grabowski i jego zespół — uczciwie, solidnie, bez zbędnych napraw. Ul. Jacka Kuronia 13.
+    </p>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">4.8</div>
+        <div class="stat-label">Ocena Google</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">79</div>
+        <div class="stat-label">Opinii</div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-line">Scroll</div>
+</section>
+
+<section id="uslugi">
+  <div class="section-label">Czym się zajmujemy</div>
+  <h2>USŁUGI</h2>
+  <div class="services-grid">
+    <div class="service-card">
+      <span class="service-icon">🔧</span>
+      <div class="service-name">Wymiana Oleju</div>
+      <p class="service-desc">Serwis olejowy z użyciem filtrów i olejów dopasowanych do silnika. Szybko i zgodnie z zaleceniami producenta.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🛑</span>
+      <div class="service-name">Hamulce</div>
+      <p class="service-desc">Wymiana klocków, tarcz i szczęk hamulcowych. Diagnostyka układu przed każdą wymianą — bez zbędnych kosztów.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🔩</span>
+      <div class="service-name">Zawieszenie</div>
+      <p class="service-desc">Naprawa i wymiana elementów zawieszenia: amortyzatory, łożyska, sworznie, drążki kierownicze.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🏎️</span>
+      <div class="service-name">Wymiana Opon</div>
+      <p class="service-desc">Sezonowa wymiana i wyważanie kół. Możliwość przechowywania opon. Obsługa felg stalowych i aluminiowych.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">⚡</span>
+      <div class="service-name">Elektrika</div>
+      <p class="service-desc">Diagnostyka komputerowa, naprawa instalacji elektrycznej, wymiana akumulatorów i alternatorów.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🔍</span>
+      <div class="service-name">Diagnostyka</div>
+      <p class="service-desc">Odczyt kodów błędów OBD, ocena stanu technicznego pojazdu przed zakupem lub przeglądem.</p>
+    </div>
+  </div>
+</section>
+
+<div class="info-section" id="kontakt">
+  <div class="info-grid">
+    <div class="info-block">
+      <div class="info-title">Godziny Otwarcia</div>
+      <div>
+        <div class="hours-row"><span>Poniedziałek</span><span class="hours-open">9:00–17:00</span></div>
+        <div class="hours-row"><span>Wtorek</span><span class="hours-open">9:00–17:00</span></div>
+        <div class="hours-row"><span>Środa</span><span class="hours-open">9:00–17:00</span></div>
+        <div class="hours-row"><span>Czwartek</span><span class="hours-open">9:00–17:00</span></div>
+        <div class="hours-row"><span>Piątek</span><span class="hours-open">9:00–17:00</span></div>
+        <div class="hours-row"><span>Sobota</span><span class="hours-closed">Zamknięte</span></div>
+        <div class="hours-row"><span>Niedziela</span><span class="hours-closed">Zamknięte</span></div>
+      </div>
+    </div>
+    <div class="info-block">
+      <div class="info-title">Kontakt</div>
+      <a href="tel:539688069" class="phone-big">539 688 069</a>
+      <div class="info-body">
+        <p style="margin-bottom:8px">Zadzwoń lub wpadnij osobiście. Chętnie omówimy zakres prac przed wizytą.</p>
+      </div>
+    </div>
+    <div class="info-block">
+      <div class="info-title">Adres</div>
+      <div class="info-body">
+        <strong>ul. Jacka Kuronia 13</strong><br>
+        10-166 Olsztyn<br><br>
+        <a href="https://maps.google.com/?q=Jacka+Kuronia+13,+10-166+Olsztyn" target="_blank" style="color:var(--accent);text-decoration:none;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;">→ Otwórz w Mapach</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="opinie">
+  <div class="reviews-header">
+    <div>
+      <div class="section-label">Co mówią klienci</div>
+      <h2>OPINIE</h2>
+    </div>
+    <div class="rating-big">
+      <div class="rating-num">4.8</div>
+      <div class="rating-info">
+        <div class="stars">★★★★★</div>
+        <div class="rating-count">79 opinii w Google</div>
+      </div>
+    </div>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card">
+      <div class="review-meta">
+        <div>
+          <div class="reviewer-name">Mateusz _</div>
+          <div class="reviewer-sub">Lokalny Przewodnik · 17 opinii</div>
+        </div>
+        <div class="review-stars">★★★★★</div>
+      </div>
+      <p class="review-text">Uczciwość. Tak podsumuje ostatnią wizytę. Właściciel uczciwie stwierdził, że hamulce i olej są w dobrej kondycji — do zapłaty jedynie wymiana opon. Pierwszy raz spotykam się z taką sytuacją. Serdecznie polecam ten garaż.</p>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <div>
+          <div class="reviewer-name">Klient GM Autoservice</div>
+          <div class="reviewer-sub">Opinia zweryfikowana</div>
+        </div>
+        <div class="review-stars">★★★★★</div>
+      </div>
+      <p class="review-text">Solidna robota, uczciwe ceny i fachowe podejście. Mechaik zawsze wyjaśnia co i dlaczego — nie robi niepotrzebnych napraw. Polecam każdemu kto szuka rzetelnego warsztatu w Olsztynie.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="section-label" style="justify-content:center">Umów wizytę</div>
+  <h2 style="margin-bottom:16px">ZADZWOŃ<br>DO NAS</h2>
+  <p>Pon–Pt 9:00–17:00 · ul. Jacka Kuronia 13, Olsztyn</p>
+  <div class="btn-group">
+    <a href="tel:539688069" class="btn btn-primary">📞 539 688 069</a>
+    <a href="https://maps.google.com/?q=Jacka+Kuronia+13,+10-166+Olsztyn" target="_blank" class="btn btn-outline">→ Jak dojechać</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">GM<span>.</span>AUTOSERVICE</div>
+  <p>Maciej Grabowski · ul. Jacka Kuronia 13, 10-166 Olsztyn</p>
+  <p style="color:var(--border)">© 2025</p>
+</footer>
+
+</body>
+</html>
